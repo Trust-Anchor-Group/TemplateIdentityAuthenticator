@@ -1,16 +1,16 @@
-Payment Service (Template)
-=============================
+Identity Authenticator (Template)
+===================================
 
-This repository provides a template solution containing a mock payment service. Developers who want to create a custom payment service for the 
-TAG Neuron(R) can use this repository as a template.
+This repository provides a template solution containing a mock identity authenticator service. Developers who want to create a custom identity
+authenticator services for the TAG Neuron(R) can use this repository as a template.
 
-Steps to create a custom payment service
---------------------------------------------
+Steps to create a custom identity authenticator service
+----------------------------------------------------------
 
 1.  Create a new repository based on this template repository
 	* Follow naming conventions for repositories, to make the repository easy to find. A Tag Service running on the TAG Neuron(R) typically
 	resides in a repository named `NeuronSERVICE`, where `SERVICE` is a short name for the service being implemented.
-	* It has been assumed the repository will be cloned to `C:\My Projects\TemplatePaymentService`, see build events below.
+	* It has been assumed the repository will be cloned to `C:\My Projects\TemplateIdentityAuthenticator`, see build events below.
 
 2.  Change the solution and project names, as well as the corresponding *manifest file* (see below).
 	* Follow naming conventions for libraries, to avoid confusion when navigating code in the Neuron(R): `COMPANY.CATEGORY.SERVICE[.SUBSERVICE]`.
@@ -23,15 +23,15 @@ Steps to create a custom payment service
 	Visual Studio when debugging. Stop the service if it started automatically after installation.
 	* Update the *post build events* so they refer to the tools available in the Neuron installation folder.
 	* Alternatively, clone the [IoT Gateway repository](https://github.com/PeterWaher/IoTGateway) and compile it. In the post build events, it is 
-	assumed it is cloned to `C:\My Projects\IoT Gateway`. It álso contains the tools referenced from the build script to generate packages.
+	assumed it is cloned to `C:\My Projects\IoT Gateway`. It also contains the tools referenced from the build script to generate packages.
 	
-5.  Make the payment service the default *Startup Project*, and edit its *Debug Launch Profile* from *project properties*, so the folders match
-	the folders your Neuron was installed at.
+5.  Make the identity authenticator service the default *Startup Project*, and edit its *Debug Launch Profile* from *project properties*, so the 
+	folders match the folders your Neuron was installed at.
 
 6.  Compile and run the template service. Make sure the console version of the Neuron is started. Once started, go to the administation page
-	and make sure the *Payment Template* button is available in the *Software* section.
+	and make sure the *Identity Authenticator Template* button is available in the *Software* section.
 
-7.  Implement the payment interfaces, as shown in code.
+7.  Implement the identity authenticator interfaces, as shown in code.
 	* Reuse libraries used by the Neuron(R) as much as possible, to simplify distribution and facilitate fixes and updates.
 	* Go through all comments in code marked with `TODO`.
 
@@ -57,7 +57,7 @@ The solution contains the following C# projects:
 
 | Project                      | Framework         | Description |
 |:-----------------------------|:------------------|:------------|
-| `TAG.Payments.Template`      | .NET Standard 2.0 | Payment Mock service that works as a good starting point for developing new payment services for the TAG Neuron(R). |
+| `TAG.Identity.Template`      | .NET Standard 2.0 | Identity Authenticator Mock service that works as a good starting point for developing new identity authenticator services for the TAG Neuron(R). |
 
 Nugets
 ---------
@@ -79,8 +79,8 @@ be used, see the [IoT Gateway repository](https://github.com/PeterWaher/IoTGatew
 Installable Package
 ----------------------
 
-To create a package, that can be distributed or installed, you begin by creating a *manifest file*. The `TAG.Payments.Template` project 
-has a manifest file called `TAG.Payments.Template.manifest`. It defines the assemblies and content files and folders included in the package. 
+To create a package, that can be distributed or installed, you begin by creating a *manifest file*. The `TAG.Identity.Template` project 
+has a manifest file called `TAG.Identity.Template.manifest`. It defines the assemblies and content files and folders included in the package. 
 You then use the `Waher.Utility.Install` and `Waher.Utility.Sign` command-line tools in the [IoT Gateway](https://github.com/PeterWaher/IoTGateway) 
 repository, to create a package file and cryptographically sign it for secure distribution across the Neuron network. These tools are also
 available in the installation folder of the Neuron(R) distribution.
@@ -121,14 +121,14 @@ TAG Neuron(R) to do this.
 
 ```
 IoTGateway\Utilities\Waher.Utility.Install\bin\Release\PublishOutput\win-x86\Waher.Utility.Install.exe
-	-p TAG.ContentServiceTemplate.package -k [AESKEY]
-	-m TemplateContentOnlyPackage\ContentServiceTemplate.manifest
+	-p TAG.Identity.Template.package -k [AESKEY]
+	-m TAG.Identity.Template.manifest
 
 IoTGateway\Utilities\Waher.Utility.Sign\bin\Release\PublishOutput\win-x86\Waher.Utility.Sign.exe 
 	-c ed448 
 	-priv [PRIVKEY]
-	-o TAG.ContentServiceTemplate.signature
-	-s TAG.ContentServiceTemplate.package
+	-o TAG.Identity.Template.signature
+	-s TAG.Identity.Template.package
 ```
 
 **Note**: The command line example above are only two commands, shown on multiple rows, for readability.
@@ -145,12 +145,12 @@ Building, Compiling & Debugging
 ----------------------------------
 
 The repository assumes you have the [IoT Gateway](https://github.com/PeterWaher/IoTGateway) repository cloned in a folder called
-`C:\My Projects\IoT Gateway`, and that this repository is placed in `C:\My Projects\TemplatePaymentService`. You can place the
+`C:\My Projects\IoT Gateway`, and that this repository is placed in `C:\My Projects\TemplateIdentityAuthenticator`. You can place the
 repositories in different folders, but you need to update the build events accordingly. You can also use an installed Neuron(R)
 on your development machine, and use it instead of the IoT Gateway. If you do so, you need to update the build events and debug
-profiles to match the installation folder. To run the application, you select the `TAG.Payments.Template` project as your startup 
+profiles to match the installation folder. To run the application, you select the `TAG.Identity.Template` project as your startup 
 project. It will execute the console version of the [IoT Gateway](https://github.com/PeterWaher/IoTGateway), and make sure the compiled 
-files of the `TemplatePaymentService` solution is run with it.
+files of the `TemplateIdentityAuthenticator` solution is run with it.
 
 Gateway.config
 -----------------
@@ -159,14 +159,14 @@ To simplify development, once the project is cloned, add a `FileFolder` referenc
 [gateway.config file](https://lab.tagroot.io/Documentation/IoTGateway/GatewayConfig.md). This allows you to test and run your changes to 
 Markdown, [back-end script](https://lab.tagroot.io/Script.md) and Javascript immediately, without having to synchronize the folder contents 
 with an external host, or recompile or go through the trouble of generating a distributable software package just for testing purposes. 
-Changes you make in .NET can be applied in runtime if you the *Hot Reload* permits, otherwise you need to recompile and re-run the application 
+Changes you make in .NET can be applied in runtime if *Hot Reload* permits, otherwise you need to recompile and re-run the application 
 again.
 
 Example of how to point a web folder to your project folder:
 
 ```
 <FileFolders>
-  <FileFolder webFolder="/TemplatePayment" folderPath="C:\My Projects\TemplatePaymentService\TAG.Payments.Template\Root\Template"/>
+  <FileFolder webFolder="/TemplateIdentity" folderPath="C:\My Projects\TemplateIdentityAuthenticator\TAG.Identity.Template\Root\TemplateIdentity"/>
 </FileFolders>
 ```
 
@@ -175,6 +175,6 @@ Example of how to point a web folder to your project folder:
 **Note 2**:  Once the Neuron(R) is restarted, the source for the files is taken from the new location. Any changes you make 
 in the corresponding `ProgramData` subfolder will have no effect on what you see via the browser.
 
-**Note 3**: This file folder is only necessary on your developer machine, to give you real-time updates as you edit the files in your
+**Note 3**: This file folder is only necessary on your developer machine to give you real-time updates as you edit the files in your
 development folder. It is not necessary in a production environment, as the files are copied into the correct folders when the package 
 is installed.
