@@ -57,7 +57,7 @@ The solution contains the following C# projects:
 
 | Project                      | Framework         | Description |
 |:-----------------------------|:------------------|:------------|
-| `TAG.Identity.Template`      | .NET Standard 2.0 | Identity Authenticator Mock service that works as a good starting point for developing new identity authenticator services for the TAG Neuron(R). |
+| `TAG.Identity.Template`      | .NET Standard 2.1 | Identity Authenticator Mock service that works as a good starting point for developing new identity authenticator services for the TAG Neuron(R). |
 
 Nugets
 ---------
