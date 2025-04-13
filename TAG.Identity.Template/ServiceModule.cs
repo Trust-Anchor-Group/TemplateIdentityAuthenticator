@@ -104,39 +104,19 @@ namespace TAG.Identity.Template
 		}
 
 		/// <summary>
-		/// Checks the veracity of identity claims.
+		/// Validates an identity application.
 		/// </summary>
-		/// <param name="Identity">Identity claims, as meta-data tags.</param>
-		/// <param name="Photos">Photos provided.</param>
-		/// <returns>Authentication result.</returns>
-		public async Task<IAuthenticationResult> IsValid(KeyValuePair<string, object>[] Identity, IEnumerable<IPhoto> Photos)
+		/// <param name="Application">Identity application.</param>
+		public async Task Validate(IIdentityApplication Application)
 		{
 			try
 			{
-				bool? Result = await this.Validate(Identity, Photos);
-
-				if (!Result.HasValue)
-					return new AuthenticationResult();
-				else
-					return new AuthenticationResult(Result.Value);
+				// TODO: Verify application and return corresponding result.
 			}
 			catch (Exception ex)
 			{
-				return new AuthenticationResult(ErrorType.Service, ex.Message);
+				Application.ReportError(ex.Message, null, null, ValidationErrorType.Service, this);
 			}
-		}
-
-		/// <summary>
-		/// Validates an identity.
-		/// </summary>
-		/// <param name="Identity">Identity meta-data.</param>
-		/// <param name="Photos">Photographs associated with identity application.</param>
-		/// <returns>If application is valid (true), invalid (false), or of unknown status (null).</returns>
-		private async Task<bool?> Validate(KeyValuePair<string, object>[] Identity, IEnumerable<IPhoto> Photos)
-		{
-			// TODO: Verify application and return corresponding result.
-
-			return null;
 		}
 
 		#endregion
